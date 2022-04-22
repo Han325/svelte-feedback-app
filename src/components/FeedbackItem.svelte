@@ -3,18 +3,18 @@
   import Card from "./Card.svelte";
   export let item;
 
-  const handleDelete = (itemId) => {
-    FeedbackStore.update((currentFeedback) => {
-      return currentFeedback.filter((item) => item.id != itemId);
-    });
-  };
+  // const handleDelete = (itemId) => {
+  //   FeedbackStore.update((currentFeedback) => {
+  //     return currentFeedback.filter((item) => item.id != itemId);
+  //   });
+  // };
 </script>
 
 <Card>
   <div class="num-display">
     {item.rating}
   </div>
-  <button class="close" on:click={() => handleDelete(item.id)}>X</button>
+  <!-- <button class="close" on:click={() => handleDelete(item.id)}>X</button> -->
   <p class="text-display">
     {item.text}
   </p>

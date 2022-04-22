@@ -9,8 +9,7 @@ export default async function getData(data = {}) {
     });
     let result = await response.json();
     let status = result.ok;
-    if (status == true) {
-      console.log(status);
+    if (status) {
       FeedbackStore.update(() => {
         return result.data;
       });

@@ -4,6 +4,7 @@
   import Card from "./Card.svelte";
   import Button from "./Button.svelte";
   import RatingSelect from "./RatingSelect.svelte";
+  import getData from "../stores"
 
   let text = "";
   let btnDisabled = false;
@@ -25,18 +26,44 @@
 
   const handleSubmit = () => {
     if (text.trim().length > min) {
-      const newFeedback = {
-        id: uuidV4(),
-        text,
-        rating: +rating,
-      };
+      // const newFeedback = {
+      //   id: uuidV4(),
+      //   text,
+      //   rating: +rating,
+      // };
 
-      FeedbackStore.update((currentFeedback) => {
-        return [newFeedback, ...currentFeedback];
-      });
+      // FeedbackStore.update((currentFeedback) => {
+      //   return [newFeedback, ...currentFeedback];
+      // });
+      
+      let form = new URLSearchParams()
+
+      form.append("rating", rating)
+      form.append("text", text)
+      postFeedback(form)
       text = "";
     }
   };
+
+  async function postFeedback(data={}){
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/post_feedback", {
+        method:"POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: data,
+      });
+      let result = await response.json()
+      let status = result.ok
+      if (status){
+        getData()
+      }
+      console.log(result)
+    } catch (error){
+      console.log(error)
+    }
+  }
 </script>
 
 <Card>
